@@ -32,10 +32,20 @@
         means that the controller's alias within the HTML will be
         albumsIndexCtrl-->
     <div class="container" ng-controller="AlbumsIndexController as albumsIndexCtrl">
-      <input type="text" class="form-control" placeholder="New album name" ng-model="albumsIndexCtrl.newAlbum.name">
-      <input type="text" class="form-control" placeholder="New album artist" ng-model="albumsIndexCtrl.newAlbum.artistName">
+      <form ng-submit="albumsIndexCtrl.createAlbum()">
+        <input type="text" class="form-control" placeholder="New album name" ng-model="albumsIndexCtrl.newAlbum.name">
+        <input type="text" class="form-control" placeholder="New album artist" ng-model="albumsIndexCtrl.newAlbum.artistName">
+        <input type="text" class="form-control" placeholder="Genres" ng-model="albumsIndexCtrl.newAlbum.genres">
+        <input type="text" class="form-control" placeholder="Realese Date" ng-model="albumsIndexCtrl.newAlbum.releaseDate">
+
+        <input class='btn-info'type="submit">
+      </form>
       <p><b>albumsIndexCtrl.newAlbum:</b> {{albumsIndexCtrl.newAlbum}}</p>
-      <input type="text" class="form-control" ng-model="searchText" placeholder="Search Albums">
+      </form>
+      <form ng-submit="albumsIndexCtrl">
+
+      </form>
+      <input type="text" class="form-control" ng-model="albumsIndexCtrl.newAlbum" placeholder="Search Albums">
       <div ng-repeat="album in albumsIndexCtrl.albums | orderBy: 'name' | filter: searchText" class="row">
 
         <div class="col-md-10 col-md-offset-1">
@@ -48,6 +58,7 @@
                   <img src="images/800x800.png" alt="album image">
                 </div>
 
+
                 <div class="col-md-9 col-xs-12">
                   <ul class="list-group form-inline">
                     <li class="list-group-item">
@@ -59,7 +70,19 @@
                       <h4 class="inline-header">Artist Name:</h4>
                       <span>{{album.artistName}}</span>
                     </li>
+                    <li class="list-group-item">
+                      <h4 class="inline-header">Genres:</h4>
+                      <span>{{album.genres}}</span>
+                    </li>
+                    <li class="list-group-item">
+                      <h4 class="inline-header">Realese Date:</h4>
+                      <span>{{album.releaseDate}}</span>
+                    </li>
                   </ul>
+                  <div class="col-md-9 col-xs-12">
+                    <button class='btn btn-info' ng-hide="editing" ng-click="editing = true">Edit Album</button>
+                    <button class='btn btn-danger' ng-click="albumsIndexCtrl.updateAlbum(album)"> Delete </button>
+                  </div>
                 </div>
               </div>
             </div>

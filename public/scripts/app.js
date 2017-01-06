@@ -10,8 +10,8 @@ angular
   // ^ the first argument is a string naming the controller,
   // the second argument is a function that defines the capacities
   // of the controller.
-
-function AlbumsIndexController () {
+AlbumsIndexController.$inject = ['$http']
+function AlbumsIndexController ($http) {
   var vm = this;
   vm.newAlbum = {};
 
@@ -20,18 +20,34 @@ function AlbumsIndexController () {
       artistName: 'Morrissey'
   };
 
-  vm.albums = [
-    {
-      name: 'Coming Home',
-      artistName: 'Leon Bridges'
-    },
-    {
-      name: 'Are We There',
-      artistName: 'Sharon Van Etten'
-    },
-    {
-      name: 'The Queen is Dead',
-      artistName: 'The Smiths'
-    }
-  ];
+  $http({
+    method: 'GET',
+    url: 'http://localhost:3000/api/albums'
+  }).then(onSucess, onError)
+
+  function onSucess(response){
+    console.log(response);
+    vm.albums = response.data;
+  }
+
+  function onError(error){
+    console.log('There was an error');
+  }
+
+  vm.createAlbum = function () {
+  $http({
+    method: 'POST',
+    url: '/api/albums',
+    data: vm.newAlbum,
+  }).then(successCallback, errorCallback)
+
+  function successCallback(response) {
+    vm.albums.push(response.data);
+  }
+  function errorCallback(response) {
+    console.log('There was an error posting the data', response);
+  }
+}
+function onError(error){
+  console.log('There was an error');
 }
