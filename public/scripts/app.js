@@ -22,6 +22,7 @@ function AlbumsIndexController ($http) {
     method: 'GET',
     url: '/api/albums'
   }).then(function successCallback(response) {
+    console.log(response)
     vm.albums = response.data;
   }, function errorCallback(response) {
     console.log('There was an error getting the data', response);
@@ -38,4 +39,29 @@ function AlbumsIndexController ($http) {
       console.log('There was an error posting the data', response);
     });
   }
+
+  vm.deleteAlbum = function(album){
+    $http({
+      method: 'DELETE',
+      url: '/api/albums/' + album._id,
+    }).then(function deleteCallback(deletedAlbum){
+      var index = vm.albums.indexOf(album);
+      vm.albums.splice(index, 1);
+    }, function deleteError(){
+    })
+  }
+
+  vm.updateAlbum = function(album){
+    $http({
+      method: 'PUT',
+      url: '/api/albums/' + album._id,
+      data: album
+    }).then(function updateCallback(updateAlbum){
+      var index = vm.albums.indexOf(album);
+      vm.albums.splice(index, 1, updateAlbum.data);
+    }, function updateError(){
+    });
+  }
+
+
 }

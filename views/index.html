@@ -101,14 +101,34 @@
                   <ul class="list-group form-inline">
                     <li class="list-group-item">
                       <h4 class="inline-header">Album Name:</h4>
-                      <span>{{album.name}}</span>
+                      <span ng-hide="editing">{{album.name}}</span>
+                      <input ng-show="editing" placeholder="album name">
                     </li>
 
                     <li class="list-group-item">
                       <h4 class="inline-header">Artist Name:</h4>
-                      <span>{{album.artistName}}</span>
+                      <span ng-hide ="editing">{{album.artistName}}</span>
+                      <input ng-show="editing" placeholder="artist name">
+                    </li>
+                    <li class="list-group-item">
+                      <h4 class="inline-header">Genres</h4>
+                      <span ng-hide ="editing">{{album.genres}}</span>
+                      <input ng-show="editing" placeholder="album genres separated by commas">
+                    </li>
+                    <li class="list-group-item">
+                      <h4 class="inline-header">Release Date</h4>
+                      <span ng-hide ="editing">{{album.releaseDate}}</span>
+                      <input ng-show="editing" placeholder="album release date">
+                    </li>
+                    <li class="list-group-item">
+                      <h4 class="inline-header">Release Date</h4>
+                      <span ng-hide ="editing">{{album.releaseDate}}</span>
+                      <input ng-show="editing" placeholder="album release date">
                     </li>
                   </ul>
+                  <button class="btn btn btn-info" ng-click="editing = true" ng-hide="editing" >edit</button>
+                  <button class="btn btn-success" ng-click="albumsIndexCtrl.updateAlbum(album); editing =false" ng-show="editing">save</button>
+                  <button class="btn btn-danger" ng-click="albumsIndexCtrl.deleteAlbum(album)">delete</button>
                 </div>
               </div>
             </div>
