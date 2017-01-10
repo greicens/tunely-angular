@@ -7,7 +7,8 @@
             <div class="panel-body">
               <div class='row'>
                 <div class="col-md-3 col-xs-12 thumbnail">
-                  <img src="images/800x800.png" alt="album image">
+                  <img src="../images/800x800.png" alt="album image">
+                  <p>Listen:</p>
                 </div>
 
                 <div class="col-md-9 col-xs-12">
@@ -30,10 +31,28 @@
                     <li class="list-group-item">
                       <h4 class="inline-header">Songs:</h4>
                       <div class="list-group-item" ng-repeat="song in albumsShowCtrl.album.songs">
+                        <button ng-hide="editing"class="btn btn-info" ng-click="albumsShowCtrl.editSong(song); editing=true">
+                          <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                        <button ng-hide="editing" class="btn btn-danger" ng-click="albumsShowCtrl.deleteSong(song)">
+                          <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                        <form name="editForm" ng-submit="albumsShowCtrl.editSong(song)">
+
+                           <p><input  class='form-control input-md'type='text' ng-show="editing" ng-model="song.trackNumber" placeholder="Track Number"></p>
+                           <p><input  class='form-control input-md'type='text' ng-show="editing" ng-model="song.name" placeholder="Track Name"></p>
+
+                           <button class="btn btn-success" ng-click= "editing =false" ng-show="editing"><span class="glyphicon glyphicon-ok">save </button>
+                         </form>
                         ({{song.trackNumber}}){{song.name}}
                       </div>
                     </li>
                   </ul>
+                  <form  method="post" ng-submit="albumsShowCtrl.createSong()">
+                    <input id="trackNumber" ng-model="albumsShowCtrl.newSong.trackNumber" type="text" class="form-control input-md" required="" placeholder="Track Number">
+                    <input id="trackName" ng-model="albumsShowCtrl.newSong.name" type="text" class="form-control input-md" required="" placeholder="Track Name">
+                    <button class="btn btn-success">+ Add New Song</button>
+                  </form>
                 </div>
               </div>
             </div>
